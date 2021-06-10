@@ -53,29 +53,14 @@ export default class App extends Component {
         })
     }
 
-    onToggleImportant = (id) => {
+
+    onToggle = (id, keyword) => {
         this.setState(({data}) => {
             const index = data.findIndex(elem => elem.id === id);
-
             const old = data[index];
 
-            const newItem = {...old, important: !old.important};
-
-            const newArr = [...data.slice(0, index), newItem, ...data.slice(index + 1)];
-
-            return {
-                data: newArr
-            }
-        })
-    }
-
-    onToggleLiked = (id) => {
-        this.setState(({data}) => {
-            const index = data.findIndex(elem => elem.id === id);
-
-            const old = data[index];
-
-            const newItem = {...old, like: !old.like};
+            const newItem = {...old};
+            newItem[keyword] = !old[keyword];
 
             const newArr = [...data.slice(0, index), newItem, ...data.slice(index + 1)];
 
@@ -134,8 +119,8 @@ export default class App extends Component {
                 <PostList 
                 posts={visiblePosts}
                 onDelete={this.deleteItem}
-                onToggleImportant={this.onToggleImportant}
-                onToggleLiked={this.onToggleLiked}/>
+                onToggle={this.onToggle}
+                onToggleLiked={this.onToggle}/>
                 <PostAddForm
                 onAdd={this.addItem}/>
             </div>
